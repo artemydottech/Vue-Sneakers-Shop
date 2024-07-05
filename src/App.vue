@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import Header from './components/Header.vue'
 import Drawer from './components/Drawer.vue'
+import Footer from './components/Footer.vue'
 //Корзина!
 const cart = ref([])
 const drawerState = ref(false)
@@ -91,13 +92,31 @@ provide('cartActions', {
     :cart="cart"
     @create-order="createOrder"
   />
-  <div class="bg-white w-4/5 m-auto rounded-xl shadow-xl mt-14">
+  <div class="app-container bg-white rounded-xl shadow-xl">
     <Header :total-price="totalPrice" @open-drawer="openDrawer" />
 
-    <div class="p-10">
+    <div class="content p-10 bg-sky-100">
       <router-view></router-view>
     </div>
+    <Footer />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.content {
+  flex: 1;
+}
+</style>

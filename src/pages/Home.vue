@@ -1,7 +1,8 @@
+<!-- eslint-disable no-unused-vars -->
 <script setup>
 import axios from 'axios'
 import { inject, ref, reactive, watch, onMounted, computed, watchEffect } from 'vue'
-import { useMainStore } from '../stores/MainStore.js'
+import { useMainStore } from '../stores/MainStore.ts'
 import CardList from '../components/CardList.vue'
 
 const { addToCart, removeFromCart, cart } = inject('cartActions')
@@ -99,9 +100,6 @@ const fetchFavorites = async () => {
   } catch (err) {
     console.log(err)
   }
-  // finally {
-  //   isCreatingOrder.value = false
-  // }
 }
 
 watch(cart, () => {
@@ -141,7 +139,6 @@ onMounted(async () => {
 <template>
   <div class="flex justify-between items-center search__wrapper">
     <h2 class="text-3xl font-bold mb-8">Все кроссовки</h2>
-    {{ isDeviceMobile }}
 
     <div class="flex gap-4 filters__wrapper">
       <select @change="onChangeSelect" class="py-2 px-3 border rounded-md outline-none">
