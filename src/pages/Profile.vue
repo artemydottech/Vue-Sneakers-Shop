@@ -2,7 +2,7 @@
 
 <template>
   <main class="main">
-    <h1>Это твой профиль!</h1>
+    <h1>Это твой профиль! daaaaa</h1>
   </main>
 </template>
 
