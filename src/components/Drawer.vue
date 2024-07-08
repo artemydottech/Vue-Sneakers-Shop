@@ -31,7 +31,7 @@ const emit = defineEmits(['createOrder'])
       <InfoBlock
         title="Корзина пустая"
         description="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
-        image-url="/public/empty-box.png"
+        image-url="public/empty-box.png"
       />
     </div>
 
