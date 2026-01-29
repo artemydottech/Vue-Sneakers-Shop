@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { ref, reactive, watch, onMounted } from 'vue'
 import { CardList } from '../components'
-import { useCart } from '@/composables/useCart'
+import { useCart } from '../composables/useCart'
 
 const { addToCart, removeFromCart, cart } = useCart()
 
@@ -74,7 +74,6 @@ const addToFavorite = async (item) => {
 
 const fetchFavorites = async () => {
   try {
-    // isCreatingOrder.value = true
     const { data: favorites } = await axios.get(`https://91e076eff4e58ce7.mokky.dev/favorites`)
 
     items.value = items.value.map((item) => {
@@ -107,7 +106,7 @@ watch(filters, fetchItems)
 watch(
   cart,
   () => {
-    console.log(cart.value)
+    console.log(cart._rawValue)
   },
   {
     deep: true
