@@ -94,7 +94,6 @@ provide('cartActions', {
   />
   <div class="app-container bg-white rounded-xl shadow-xl">
     <Header :total-price="totalPrice" @open-drawer="openDrawer" />
-
     <div class="content p-10 bg-sky-100">
       <router-view></router-view>
     </div>
@@ -102,21 +101,21 @@ provide('cartActions', {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 html,
 body {
   height: 100%;
   margin: 0;
-}
 
-.app-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
-}
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+  }
 
-.content {
-  flex: 1;
+  .content {
+    flex: 1;
+  }
 }
 </style>

@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import axios from 'axios'
 import { inject, ref, reactive, watch, onMounted } from 'vue'
-import CardList from '../components/CardList.vue'
+import { CardList } from '../components'
 
 const { addToCart, removeFromCart, cart } = inject('cartActions')
-
 
 const filters = reactive({
   sortBy: 'title',
