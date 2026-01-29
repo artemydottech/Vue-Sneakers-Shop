@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import axios from 'axios'
-import { inject, ref, reactive, watch, onMounted } from 'vue'
+import { ref, reactive, watch, onMounted } from 'vue'
 import { CardList } from '../components'
+import { useCart } from '@/composables/useCart'
 
-const { addToCart, removeFromCart, cart } = inject('cartActions')
+const { addToCart, removeFromCart, cart } = useCart()
 
 const filters = reactive({
   sortBy: 'title',
@@ -32,10 +33,6 @@ const fetchItems = async () => {
   try {
     const params = {
       sortBy: filters.sortBy
-    }
-
-    if (filters.searchQuery) {
-      params.title = `*${filters.searchQuery}*`
     }
 
     const { data } = await axios.get(`https://91e076eff4e58ce7.mokky.dev/sneakers`, {
