@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import { ref, computed, watchEffect } from 'vue'
+import { computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useMainStore = defineStore('main', () => {
@@ -7,7 +6,5 @@ export const useMainStore = defineStore('main', () => {
     return window.innerWidth <= 720
   })
 
-  return {
-    isDeviceMobile
-  }
+  return { isDeviceMobile }
 })

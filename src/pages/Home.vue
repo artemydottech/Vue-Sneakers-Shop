@@ -1,13 +1,10 @@
-<!-- eslint-disable no-unused-vars -->
-<script setup>
+<script setup lang="ts">
 import axios from 'axios'
-import { inject, ref, reactive, watch, onMounted, computed, watchEffect } from 'vue'
-import { useMainStore } from '../stores/MainStore.ts'
+import { inject, ref, reactive, watch, onMounted } from 'vue'
 import CardList from '../components/CardList.vue'
 
 const { addToCart, removeFromCart, cart } = inject('cartActions')
 
-const mainStore = useMainStore()
 
 const filters = reactive({
   sortBy: 'title',

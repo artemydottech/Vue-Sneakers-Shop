@@ -1,9 +1,7 @@
 <script setup>
-import Card from './Card.vue'
+import { Card } from '.'
 
-defineProps({
-  items: Array
-})
+defineProps({ items: Array })
 
 const emit = defineEmits(['addToFavorite', 'addToCart'])
 </script>
