@@ -12,6 +12,7 @@ pids
 # Dependency directories
 node_modules/
 dist/
+.vite/
 
 # Optional npm cache directory
 .npm
