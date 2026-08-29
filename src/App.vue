@@ -1,12 +1,14 @@
-<script setup>
-import { ref, watch, provide, computed } from 'vue'
+<script setup lang="ts">
+import { ref, provide, computed } from 'vue'
 import axios from 'axios'
 
 import Header from './components/Header.vue'
 import Drawer from './components/Drawer.vue'
 import Footer from './components/Footer.vue'
-//Корзина!
-const cart = ref([])
+import { useCart } from './composables/useCart'
+
+const { cart, addToCart, removeFromCart } = useCart()
+
 const drawerState = ref(false)
 const isCreatingOrder = ref(false)
 const totalPrice = computed(() => {
@@ -29,16 +31,6 @@ const openDrawer = () => {
   drawerState.value = true
 }
 
-const addToCart = (item) => {
-  cart.value.push(item)
-  item.isAdded = true
-}
-
-const removeFromCart = (item) => {
-  cart.value.splice(cart.value.indexOf(item), 1)
-  item.isAdded = false
-}
-
 const createOrder = async () => {
   try {
     isCreatingOrder.value = true
@@ -57,20 +49,6 @@ const createOrder = async () => {
   }
 }
 //Корзина end
-
-//Глубокая проверка, где при каждом добавлении/удалении товара из корзины watch это отслеживает
-
-// Неглубокая проверка на watch
-
-watch(
-  cart,
-  () => {
-    localStorage.setItem('cart', JSON.stringify(cart.value))
-  },
-  {
-    deep: true
-  }
-)
 
 //Provide's, используемые в других файлах
 provide('cartActions', {
