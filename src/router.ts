@@ -1,17 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomePage from './pages/Home.vue'
-import FavoritesPage from './pages/Favorites.vue'
-import ProfilePage from './pages/Profile.vue'
 
-const routes = [
-  { path: '/', name: 'home', component: HomePage },
-  { path: '/favorites', name: 'favorites', component: FavoritesPage },
-  { path: '/profile', name: 'profile', component: ProfilePage }
-]
-
-const router = createRouter({
+export const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes: [
+    { path: '/', name: 'home', component: () => import('@/pages/home.vue') },
+    { path: '/favorites', name: 'favorites', component: () => import('@/pages/favorites.vue') },
+    { path: '/orders', name: 'orders', component: () => import('@/pages/orders.vue') }
+  ]
 })
-
-export default router

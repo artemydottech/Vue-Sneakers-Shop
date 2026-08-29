@@ -1,41 +1,36 @@
-<script setup>
-import axios from 'axios'
-import { ref, onMounted } from 'vue'
-import CardList from '../components/CardList.vue'
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import ProductGrid from '@/components/product-grid.vue'
+import EmptyState from '@/components/empty-state.vue'
+import { useCatalogueStore } from '@/stores/catalogue'
+import { useFavoritesStore } from '@/stores/favorites'
 
-const favoritesItems = ref([])
+const router = useRouter()
+const catalogue = useCatalogueStore()
+const favorites = useFavoritesStore()
 
-const fetchFavorites = async () => {
-  try {
-    // isCreatingOrder.value = true
-    const { data: favorites } = await axios.get(`https://3c5b6e4314bc9170.mokky.dev/favorites`)
-
-    const favoritesSneakers = favorites.map((favorite) => {
-      return favorite.parentId
-    })
-
-    const params = { id: favoritesSneakers, sortBy: 'title' }
-
-    const { data } = await axios.get(`https://3c5b6e4314bc9170.mokky.dev/sneakers`, {
-      params
-    })
-
-    console.log(favorites)
-    console.log(data)
-    favoritesItems.value = data.map((item) => ({
-      ...item,
-      isFavorite: true
-    }))
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-onMounted(async () => {
-  await fetchFavorites()
-})
+const items = computed(() => catalogue.items.filter((item) => favorites.has(item.id)))
 </script>
 
 <template>
-  <CardList :items="favoritesItems" />
+  <section class="space-y-8">
+    <div>
+      <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">Закладки</h1>
+      <p class="mt-1 text-sm text-zinc-500">{{ favorites.count }} отложенных моделей</p>
+    </div>
+
+    <ProductGrid v-if="catalogue.isLoading" :items="[]" is-loading />
+
+    <EmptyState
+      v-else-if="!items.length"
+      title="Закладок пока нет"
+      description="Отмечайте понравившиеся пары сердечком, чтобы вернуться к ним позже."
+      image-url="/empty-box.png"
+      action-label="Перейти в каталог"
+      @action="router.push('/')"
+    />
+
+    <ProductGrid v-else :items="items" />
+  </section>
 </template>
