@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import axios from 'axios'
-import { ref, reactive, watch, onMounted } from 'vue'
-import { CardList } from '../components'
+import { ref, reactive, computed, onMounted, watch } from 'vue'
+import CardList from '../components/CardList.vue'
 import { useCart } from '../composables/useCart'
 
 const { addToCart, removeFromCart, cart } = useCart()
@@ -11,56 +11,52 @@ const filters = reactive({
   searchQuery: ''
 })
 
-const onChangeSelect = (event) => {
-  filters.sortBy = event.target.value
+const onChangeSelect = (event: InputEvent) => {
+  const target = event.target as HTMLSelectElement
+  filters.sortBy = target.value
 }
 
-const onChangeSearchInput = (event) => {
-  filters.searchQuery = event.target.value
+const onChangeSearchInput = (event: Event) => {
+  filters.searchQuery = (event.target as HTMLInputElement).value
 }
 
-const onClickAddPlus = (item) => {
-  if (!item.isAdded) {
-    addToCart(item)
-  } else {
+const isInCart = computed(() => {
+  const ids = new Set(cart.value.map((item: any) => item.id))
+  return (id: number) => ids.has(id)
+})
+
+const onClickAddPlus = (item: any) => {
+  if (isInCart.value(item.id)) {
     removeFromCart(item)
+  } else {
+    addToCart(item)
   }
 }
 
-const items = ref([])
+const items = ref<any[]>([])
 
 const fetchItems = async () => {
   try {
-    const params = {
-      sortBy: filters.sortBy
-    }
+    const params = { sortBy: filters.sortBy }
+    const { data } = await axios.get(`https://91e076eff4e58ce7.mokky.dev/sneakers`, { params })
 
-    const { data } = await axios.get(`https://91e076eff4e58ce7.mokky.dev/sneakers`, {
-      params
-    })
-
-    items.value = data.map((obj) => ({
+    items.value = data.map((obj: any) => ({
       ...obj,
       isFavorite: false,
       favoriteId: null,
-      isAdded: false
+      isAdded: isInCart.value(obj.id)
     }))
   } catch (err) {
     console.log(err)
   }
 }
 
-const addToFavorite = async (item) => {
+const addToFavorite = async (item: any) => {
   try {
     if (!item.isFavorite) {
-      const obj = {
-        parentId: item.id
-      }
-
+      const params = { parentId: item.id }
       item.isFavorite = true
-
-      const { data } = await axios.post(`https://91e076eff4e58ce7.mokky.dev/favorites`, obj)
-
+      const { data } = await axios.post(`https://91e076eff4e58ce7.mokky.dev/favorites`, params)
       item.favoriteId = data.id
     } else {
       item.isFavorite = false
@@ -76,12 +72,9 @@ const fetchFavorites = async () => {
   try {
     const { data: favorites } = await axios.get(`https://91e076eff4e58ce7.mokky.dev/favorites`)
 
-    items.value = items.value.map((item) => {
-      const favorite = favorites.find((favorite) => favorite.parentId === item.id)
-
-      if (!favorite) {
-        return item
-      }
+    items.value = items.value.map((item: any) => {
+      const favorite = favorites.find((f: any) => f.parentId === item.id)
+      if (!favorite) return item
 
       return {
         ...item,
@@ -94,36 +87,15 @@ const fetchFavorites = async () => {
   }
 }
 
-watch(cart, () => {
-  items.value = items.value.map((item) => ({
-    ...item,
-    isAdded: false
-  }))
-})
-
-watch(filters, fetchItems)
-
-watch(
-  cart,
-  () => {
-    console.log(cart._rawValue)
-  },
-  {
-    deep: true
-  }
-)
+watch(filters, fetchItems, { deep: true })
 
 onMounted(async () => {
-  const localCart = localStorage.getItem('cart')
-
-  cart.value = localCart ? JSON.parse(localCart) : []
-
   await fetchItems()
   await fetchFavorites()
 
-  items.value = items.value.map((item) => ({
+  items.value = items.value.map((item: any) => ({
     ...item,
-    isAdded: cart.value.some((cartItem) => cartItem.id === item.id)
+    isAdded: isInCart.value(item.id)
   }))
 })
 </script>
@@ -142,7 +114,7 @@ onMounted(async () => {
       <div class="relative">
         <img class="absolute left-4 top-3" src="/search.svg" alt="search" />
         <input
-          @change="onChangeSearchInput"
+          @input="onChangeSearchInput"
           class="border rounded-md py-1.5 pl-11 pr-4 outline-none focus:border-gray-400"
           placeholder="Поиск..."
         />
@@ -161,7 +133,6 @@ onMounted(async () => {
     flex-direction: column;
   }
 }
-
 @media screen and (max-width: 720px) {
   .filters__wrapper {
     flex-direction: column;
