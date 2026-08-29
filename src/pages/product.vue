@@ -6,6 +6,7 @@ import EmptyState from '@/components/empty-state.vue'
 import { useCartStore } from '@/stores/cart'
 import { useCatalogueStore } from '@/stores/catalogue'
 import { useFavoritesStore } from '@/stores/favorites'
+import { asset } from '@/utils/asset'
 import { formatPrice } from '@/utils/format'
 
 const route = useRoute()
@@ -32,7 +33,7 @@ const related = computed(() => (sneaker.value ? catalogue.relatedTo(sneaker.valu
     v-else-if="!sneaker"
     title="Модель не найдена"
     description="Возможно, её убрали из каталога или ссылка устарела."
-    image-url="/empty-box.png"
+    :image-url="asset('empty-box.png')"
     action-label="Вернуться в каталог"
     @action="$router.push('/')"
   />

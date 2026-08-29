@@ -1,4 +1,5 @@
 import type { Sneaker } from '@/types'
+import { asset } from '@/utils/asset'
 
 export const SNEAKERS: Sneaker[] = [
   {
@@ -6,7 +7,7 @@ export const SNEAKERS: Sneaker[] = [
     brand: 'Nike',
     title: 'Blazer Mid Suede',
     price: 12999,
-    imageUrl: '/sneakers/sneakers-1.jpg',
+    imageUrl: asset('sneakers/sneakers-1.jpg'),
     description:
       'Замшевый верх, высокий силуэт и вулканизированная подошва — модель, которая почти не изменилась с семидесятых и до сих пор собирается по той же колодке.'
   },
@@ -15,7 +16,7 @@ export const SNEAKERS: Sneaker[] = [
     brand: 'Nike',
     title: 'Air Max 270',
     price: 15600,
-    imageUrl: '/sneakers/sneakers-2.jpg',
+    imageUrl: asset('sneakers/sneakers-2.jpg'),
     description:
       'Самая высокая воздушная камера в линейке Air Max: 32 мм в пятке, полностью видимая сбоку. Верх из сетки, бесшовная посадка.'
   },
@@ -24,7 +25,7 @@ export const SNEAKERS: Sneaker[] = [
     brand: 'Nike',
     title: 'Blazer Mid Suede',
     price: 8499,
-    imageUrl: '/sneakers/sneakers-3.jpg',
+    imageUrl: asset('sneakers/sneakers-3.jpg'),
     description:
       'Светлая расцветка на кремовой замше с контрастным свушем. Классический баскетбольный крой, который давно переехал в повседневную носку.'
   },
@@ -33,7 +34,7 @@ export const SNEAKERS: Sneaker[] = [
     brand: 'Puma',
     title: 'X Aka Boku Future Rider',
     price: 8999,
-    imageUrl: '/sneakers/sneakers-4.jpg',
+    imageUrl: asset('sneakers/sneakers-4.jpg'),
     description:
       'Коллаборация с японской студией Aka Boku: ретро-беговой силуэт восьмидесятых, лёгкая пена IMEVA и нейлоновый верх.'
   },
@@ -42,7 +43,7 @@ export const SNEAKERS: Sneaker[] = [
     brand: 'Under Armour',
     title: 'Curry 8',
     price: 15199,
-    imageUrl: '/sneakers/sneakers-5.jpg',
+    imageUrl: asset('sneakers/sneakers-5.jpg'),
     description:
       'Восьмая модель Стефена Карри. Верх UA Warp фиксирует стопу без лишних слоёв, подошва Flow сделана без резины — легче и цепче на паркете.'
   },
@@ -51,7 +52,7 @@ export const SNEAKERS: Sneaker[] = [
     brand: 'Nike',
     title: 'Kyrie 7',
     price: 11299,
-    imageUrl: '/sneakers/sneakers-6.jpg',
+    imageUrl: asset('sneakers/sneakers-6.jpg'),
     description:
       'Круглая пяточная зона и агрессивный протектор под резкие смены направления — модель собрана вокруг манеры игры Кайри Ирвинга.'
   },
@@ -60,7 +61,7 @@ export const SNEAKERS: Sneaker[] = [
     brand: 'Jordan',
     title: 'Air Jordan Mid',
     price: 10799,
-    imageUrl: '/sneakers/sneakers-7.jpg',
+    imageUrl: asset('sneakers/sneakers-7.jpg'),
     description:
       'Средняя высота, кожаный верх и перфорация на мыске. Тот самый силуэт, с которого началась вся линейка Jordan.'
   },
@@ -69,7 +70,7 @@ export const SNEAKERS: Sneaker[] = [
     brand: 'Nike',
     title: 'LeBron XVIII',
     price: 16499,
-    imageUrl: '/sneakers/sneakers-8.jpg',
+    imageUrl: asset('sneakers/sneakers-8.jpg'),
     description:
       'Связка Air Max 180 в пятке и Zoom Air в носке под вес и скорость Леброна. Верх Knitposite 2.0 тянется только там, где нужно.'
   },
@@ -78,7 +79,7 @@ export const SNEAKERS: Sneaker[] = [
     brand: 'Nike',
     title: 'LeBron XVIII Low',
     price: 13999,
-    imageUrl: '/sneakers/sneakers-9.jpg',
+    imageUrl: asset('sneakers/sneakers-9.jpg'),
     description:
       'Низкая версия восемнадцатой модели: тот же амортизационный пакет, но легче на сто граммов и свободнее в голеностопе.'
   },
@@ -87,7 +88,7 @@ export const SNEAKERS: Sneaker[] = [
     brand: 'Nike',
     title: 'Blazer Mid Suede',
     price: 9599,
-    imageUrl: '/sneakers/sneakers-10.jpg',
+    imageUrl: asset('sneakers/sneakers-10.jpg'),
     description:
       'Тёмная замша, состаренная midsole и винтажный свуш. Blazer в той отделке, ради которой его обычно и берут.'
   },
@@ -96,7 +97,7 @@ export const SNEAKERS: Sneaker[] = [
     brand: 'Nike',
     title: 'Kyrie Flytrap IV',
     price: 11299,
-    imageUrl: '/sneakers/sneakers-11.jpg',
+    imageUrl: asset('sneakers/sneakers-11.jpg'),
     description:
       'Бюджетная ветка линейки Kyrie: та же геометрия подошвы, но проще материалы верха. Рабочая пара для зала.'
   },
@@ -105,7 +106,7 @@ export const SNEAKERS: Sneaker[] = [
     brand: 'Nike',
     title: 'Kyrie Flytrap IV',
     price: 8899,
-    imageUrl: '/sneakers/sneakers-12.jpg',
+    imageUrl: asset('sneakers/sneakers-12.jpg'),
     description:
       'Контрастная расцветка Flytrap IV. Усиленный мысок и широкая опора под передней частью стопы.'
   }

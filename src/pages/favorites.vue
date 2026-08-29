@@ -5,6 +5,7 @@ import ProductGrid from '@/components/product-grid.vue'
 import EmptyState from '@/components/empty-state.vue'
 import { useCatalogueStore } from '@/stores/catalogue'
 import { useFavoritesStore } from '@/stores/favorites'
+import { asset } from '@/utils/asset'
 
 const router = useRouter()
 const catalogue = useCatalogueStore()
@@ -26,7 +27,7 @@ const items = computed(() => catalogue.items.filter((item) => favorites.has(item
       v-else-if="!items.length"
       title="Закладок пока нет"
       description="Отмечайте понравившиеся пары сердечком, чтобы вернуться к ним позже."
-      image-url="/empty-box.png"
+      :image-url="asset('empty-box.png')"
       action-label="Перейти в каталог"
       @action="router.push('/')"
     />

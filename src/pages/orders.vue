@@ -2,6 +2,7 @@
 import { useRouter } from 'vue-router'
 import EmptyState from '@/components/empty-state.vue'
 import { useOrdersStore } from '@/stores/orders'
+import { asset } from '@/utils/asset'
 import { formatDate, formatPrice } from '@/utils/format'
 
 const router = useRouter()
@@ -19,7 +20,7 @@ const orders = useOrdersStore()
       v-if="!orders.count"
       title="Заказов ещё не было"
       description="Соберите корзину и оформите первый заказ."
-      image-url="/package-icon.png"
+      :image-url="asset('package-icon.png')"
       action-label="Перейти в каталог"
       @action="router.push('/')"
     />

@@ -4,6 +4,7 @@ import type { Order } from '@/types'
 import CartLineRow from './cart-line.vue'
 import { useCartStore } from '@/stores/cart'
 import { useOrdersStore } from '@/stores/orders'
+import { asset } from '@/utils/asset'
 import { formatPrice } from '@/utils/format'
 
 const props = defineProps<{
@@ -113,7 +114,7 @@ watch(
           v-else-if="cart.isEmpty"
           class="flex flex-1 flex-col items-center justify-center gap-3 px-8 text-center"
         >
-          <img src="/empty-box.png" alt="" class="size-24 object-contain" />
+          <img :src="asset('empty-box.png')" alt="" class="size-24 object-contain" />
           <h3 class="text-xl font-semibold">Корзина пустая</h3>
           <p class="text-sm text-ink-muted">Добавьте хотя бы одну пару, чтобы оформить заказ.</p>
           <button
