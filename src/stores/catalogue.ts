@@ -32,6 +32,13 @@ export const useCatalogueStore = defineStore('catalogue', () => {
     return [...filtered].sort(comparators[sortBy.value])
   })
 
+  const byId = (id: number) => items.value.find((item) => item.id === id) ?? null
+
+  const relatedTo = (sneaker: Sneaker, limit = 4) =>
+    items.value
+      .filter((item) => item.id !== sneaker.id && item.brand === sneaker.brand)
+      .slice(0, limit)
+
   const load = async () => {
     if (status.value === 'loading') return
 
@@ -47,5 +54,5 @@ export const useCatalogueStore = defineStore('catalogue', () => {
     }
   }
 
-  return { items, status, error, search, sortBy, isLoading, visibleItems, load }
+  return { items, status, error, search, sortBy, isLoading, visibleItems, byId, relatedTo, load }
 })

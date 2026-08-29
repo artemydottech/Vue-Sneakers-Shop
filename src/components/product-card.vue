@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import type { Sneaker } from '@/types'
 import { formatPrice } from '@/utils/format'
 
@@ -16,7 +17,7 @@ const emit = defineEmits<{
 
 <template>
   <article
-    class="group flex flex-col overflow-hidden rounded-4xl border border-zinc-200 bg-white transition duration-500 ease-smooth hover:-translate-y-1 hover:shadow-[0_20px_45px_-28px_rgba(0,0,0,0.55)]"
+    class="group relative flex flex-col overflow-hidden rounded-4xl border border-zinc-200 bg-white transition duration-500 ease-smooth hover:-translate-y-1 hover:shadow-[0_20px_45px_-28px_rgba(0,0,0,0.55)]"
   >
     <div class="relative aspect-[4/3] overflow-hidden bg-zinc-50">
       <img
@@ -30,7 +31,7 @@ const emit = defineEmits<{
         type="button"
         :aria-label="isFavorite ? 'Убрать из закладок' : 'Добавить в закладки'"
         :aria-pressed="isFavorite"
-        class="absolute right-4 top-4 grid size-9 place-items-center rounded-full bg-white/80 backdrop-blur transition hover:bg-white"
+        class="absolute right-4 top-4 z-20 grid size-9 place-items-center rounded-full bg-white/80 backdrop-blur transition hover:bg-white"
         @click="emit('toggleFavorite', sneaker.id)"
       >
         <svg
@@ -57,7 +58,7 @@ const emit = defineEmits<{
       <button
         type="button"
         :aria-label="isInCart ? 'Убрать из корзины' : 'Добавить в корзину'"
-        class="grid size-11 shrink-0 place-items-center rounded-2xl transition duration-300 ease-smooth"
+        class="relative z-20 grid size-11 shrink-0 place-items-center rounded-2xl transition duration-300 ease-smooth"
         :class="
           isInCart ? 'bg-accent text-ink' : 'bg-ink-soft text-white hover:bg-accent hover:text-ink'
         "
@@ -85,5 +86,11 @@ const emit = defineEmits<{
         </svg>
       </button>
     </div>
+
+    <RouterLink
+      :to="`/product/${sneaker.id}`"
+      class="absolute inset-0 z-10"
+      :aria-label="`${sneaker.brand} ${sneaker.title}`"
+    />
   </article>
 </template>

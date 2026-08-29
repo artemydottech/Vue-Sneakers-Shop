@@ -37,7 +37,7 @@ npm run deploy     # gh-pages -d dist
 ```text
 src/
   components/   витрина, карточка, корзина-дровер, пустые состояния
-  pages/        home, favorites, orders
+  pages/        home, product, favorites, orders
   stores/       catalogue, cart, favorites, orders
   services/api/ client + sneakers + orders
   utils/        format, storage
