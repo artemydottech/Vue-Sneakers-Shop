@@ -4,6 +4,7 @@ export interface Sneaker {
   brand: string
   price: number
   imageUrl: string
+  description?: string
 }
 
 export interface CartLine {
