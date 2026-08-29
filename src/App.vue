@@ -1,99 +1,36 @@
 <script setup lang="ts">
-import { ref, provide, computed } from 'vue'
-import axios from 'axios'
+import { onMounted, ref } from 'vue'
+import AppHeader from '@/components/app-header.vue'
+import AppFooter from '@/components/app-footer.vue'
+import CartDrawer from '@/components/cart-drawer.vue'
+import { useCatalogueStore } from '@/stores/catalogue'
 
-import Header from './components/Header.vue'
-import Drawer from './components/Drawer.vue'
-import Footer from './components/Footer.vue'
-import { useCart } from './composables/useCart'
+const catalogue = useCatalogueStore()
+const isCartOpen = ref(false)
 
-const { cart, addToCart, removeFromCart } = useCart()
-
-const drawerState = ref(false)
-const isCreatingOrder = ref(false)
-const totalPrice = computed(() => {
-  return cart.value.reduce((acc, item) => acc + item.price, 0)
-})
-const vatPrice = computed(() => {
-  return Math.round((totalPrice.value * 5) / 100)
-})
-
-const isEmptyCart = computed(() => cart.value.length === 0)
-const cartButtonDisabled = computed(() => {
-  return isEmptyCart.value || isCreatingOrder.value
-})
-
-const closeDrawer = () => {
-  drawerState.value = false
-}
-
-const openDrawer = () => {
-  drawerState.value = true
-}
-
-const createOrder = async () => {
-  try {
-    isCreatingOrder.value = true
-    const { data } = await axios.post('https://91e076eff4e58ce7.mokky.dev/orders', {
-      items: cart.value,
-      totalPrice: totalPrice.value + vatPrice.value
-    })
-
-    cart.value = []
-
-    return data
-  } catch (err) {
-    console.log('Ошибка при создании заказа: ', err)
-  } finally {
-    isCreatingOrder.value = false
-  }
-}
-//Корзина end
-
-//Provide's, используемые в других файлах
-provide('cartActions', {
-  cart,
-  closeDrawer,
-  openDrawer,
-  addToCart,
-  removeFromCart
-})
+onMounted(catalogue.load)
 </script>
 
 <template>
-  <Drawer
-    v-if="drawerState"
-    :total-price="totalPrice"
-    :vatPrice="vatPrice"
-    :cartButtonDisabled="cartButtonDisabled"
-    :is-creating-order="isCreatingOrder"
-    :cart="cart"
-    @create-order="createOrder"
-  />
-  <div class="app-container bg-white rounded-xl shadow-xl">
-    <Header :total-price="totalPrice" @open-drawer="openDrawer" />
-    <div class="content p-10 bg-sky-100">
-      <router-view></router-view>
-    </div>
-    <Footer />
+  <div class="flex min-h-screen flex-col">
+    <AppHeader @open-cart="isCartOpen = true" />
+
+    <main class="container-page flex-1 py-10 sm:py-14">
+      <RouterView v-slot="{ Component }">
+        <Transition
+          mode="out-in"
+          enter-from-class="opacity-0 translate-y-2"
+          enter-active-class="transition duration-300 ease-smooth"
+          leave-to-class="opacity-0"
+          leave-active-class="transition duration-150"
+        >
+          <component :is="Component" />
+        </Transition>
+      </RouterView>
+    </main>
+
+    <AppFooter />
+
+    <CartDrawer :open="isCartOpen" @close="isCartOpen = false" />
   </div>
 </template>
-
-<style scoped lang="scss">
-html,
-body {
-  height: 100%;
-  margin: 0;
-
-  .app-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    width: 100%;
-  }
-
-  .content {
-    flex: 1;
-  }
-}
-</style>

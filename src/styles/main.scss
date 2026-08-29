@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-.close-btn {
-  padding: 5px;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-zinc-100 text-ink antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-zinc-100;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-10;
+  }
 }
