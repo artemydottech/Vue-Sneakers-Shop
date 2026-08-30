@@ -32,6 +32,19 @@ npm run format     # prettier --write src/
 npm run deploy     # gh-pages -d dist
 ```
 
+## Деплой
+
+Сайт живёт на GitHub Pages по адресу
+[artemydottech.github.io/Vue-Sneakers-Shop](https://artemydottech.github.io/Vue-Sneakers-Shop/)
+и отдаётся из ветки `gh-pages`. Пуш в `main` публикует её сам — workflow
+`.github/workflows/deploy.yml` собирает `dist` и коммитит его туда.
+
+`npm run deploy` остался как ручной запасной путь.
+
+Проект отдаётся из подпапки, поэтому в `vite.config.ts` задан
+`base: '/Vue-Sneakers-Shop/'`. Пути к файлам из `public/` пишутся через
+`asset()` — Vite сам правит только `index.html`.
+
 ## Структура
 
 ```text
