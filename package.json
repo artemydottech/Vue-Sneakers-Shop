@@ -7,10 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .vue,.ts,.js,.cjs,.mjs --fix --ignore-path .gitignore",
+    "lint": "eslint .",
     "format": "prettier --write src/",
     "deploy": "gh-pages -d dist",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "axios": "^1.6.5",
