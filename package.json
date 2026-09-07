@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
+    "test": "vitest run",
     "format": "prettier --write src/",
     "deploy": "gh-pages -d dist",
     "typecheck": "vue-tsc --noEmit",
@@ -30,12 +31,14 @@
     "eslint": "^8.49.0",
     "eslint-plugin-vue": "^9.17.0",
     "gh-pages": "^6.1.1",
+    "jsdom": "^26",
     "postcss": "^8.4.33",
     "prettier": "^3.0.3",
     "sass": "^1.77.6",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.9.3",
     "vite": "^5.0.10",
+    "vitest": "^2",
     "vue-tsc": "^3.2.4"
   }
 }
