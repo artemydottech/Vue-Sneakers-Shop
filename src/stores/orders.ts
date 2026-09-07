@@ -2,6 +2,7 @@ import { computed, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 import type { CartLine, Order } from '@/types'
 import { createOrder } from '@/services/api/orders'
+import { errorMessage } from '@/utils/error'
 import { readJson, writeJson } from '@/utils/storage'
 
 const STORAGE_KEY = 'sneakers:orders'
@@ -22,7 +23,7 @@ export const useOrdersStore = defineStore('orders', () => {
       orders.value = [order, ...orders.value]
       return order
     } catch (placeError) {
-      error.value = (placeError as Error).message
+      error.value = errorMessage(placeError, 'Не удалось оформить заказ')
       return null
     } finally {
       isSubmitting.value = false

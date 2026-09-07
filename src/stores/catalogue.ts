@@ -2,6 +2,7 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { LoadStatus, Sneaker, SortKey } from '@/types'
 import { getSneakers } from '@/services/api/sneakers'
+import { errorMessage } from '@/utils/error'
 
 const comparators: Record<SortKey, (a: Sneaker, b: Sneaker) => number> = {
   popular: (a, b) => a.id - b.id,
@@ -49,7 +50,7 @@ export const useCatalogueStore = defineStore('catalogue', () => {
       items.value = await getSneakers()
       status.value = 'ready'
     } catch (loadError) {
-      error.value = (loadError as Error).message
+      error.value = errorMessage(loadError, 'Не удалось загрузить каталог')
       status.value = 'error'
     }
   }
