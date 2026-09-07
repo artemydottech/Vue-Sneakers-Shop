@@ -1,7 +1,12 @@
-export const readJson = <T>(key: string, fallback: T): T => {
+export const readJson = <T>(key: string, fallback: T, isValid?: (value: unknown) => boolean): T => {
   try {
     const raw = localStorage.getItem(key)
-    return raw ? (JSON.parse(raw) as T) : fallback
+    if (!raw) return fallback
+
+    const parsed = JSON.parse(raw) as unknown
+    if (isValid && !isValid(parsed)) return fallback
+
+    return parsed as T
   } catch {
     return fallback
   }

@@ -8,7 +8,7 @@ import { readJson, writeJson } from '@/utils/storage'
 const STORAGE_KEY = 'sneakers:orders'
 
 export const useOrdersStore = defineStore('orders', () => {
-  const orders = ref<Order[]>(readJson<Order[]>(STORAGE_KEY, []))
+  const orders = ref<Order[]>(readJson<Order[]>(STORAGE_KEY, [], Array.isArray))
   const isSubmitting = ref(false)
   const error = ref<Nullable<string>>(null)
 

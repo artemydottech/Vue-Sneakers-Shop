@@ -1,11 +1,12 @@
 import { computed, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
+import { isIdList } from '@/utils/storage-guards'
 import { readJson, writeJson } from '@/utils/storage'
 
 const STORAGE_KEY = 'sneakers:favorites'
 
 export const useFavoritesStore = defineStore('favorites', () => {
-  const ids = ref<number[]>(readJson<number[]>(STORAGE_KEY, []))
+  const ids = ref<number[]>(readJson<number[]>(STORAGE_KEY, [], isIdList))
 
   const index = computed(() => new Set(ids.value))
   const count = computed(() => ids.value.length)

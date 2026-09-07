@@ -1,13 +1,14 @@
 import { computed, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 import type { CartLine, Sneaker } from '@/types'
+import { isCartLines } from '@/utils/storage-guards'
 import { readJson, writeJson } from '@/utils/storage'
 
 const STORAGE_KEY = 'sneakers:cart'
 const VAT_RATE = 0.05
 
 export const useCartStore = defineStore('cart', () => {
-  const lines = ref<CartLine[]>(readJson<CartLine[]>(STORAGE_KEY, []))
+  const lines = ref<CartLine[]>(readJson<CartLine[]>(STORAGE_KEY, [], isCartLines))
 
   const ids = computed(() => new Set(lines.value.map((line) => line.id)))
   const count = computed(() => lines.value.reduce((sum, line) => sum + line.quantity, 0))
