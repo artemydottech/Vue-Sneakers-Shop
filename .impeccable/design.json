@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-23T00:00:00Z",
+  "title": "Design System: Пара",
+  "extensions": {
+    "colorMeta": {
+      "board": { "role": "primary", "displayName": "Kraft Board", "canonical": "oklch(67.2% 0.140 52.0)", "tonalRamp": ["#240000", "#470b00", "#6d2700", "#954200", "#bd6627", "#df8e5b", "#ffb88b", "#ffdeb7"] },
+      "board-side": { "role": "primary", "displayName": "Box Side", "canonical": "oklch(58.7% 0.130 50.4)", "tonalRamp": ["#230000", "#460e00", "#6b2900", "#924509", "#ba6734", "#dc9063", "#feb992", "#ffdfbd"] },
+      "board-deep": { "role": "primary", "displayName": "Box Shadow Face", "canonical": "oklch(47.0% 0.109 49.7)", "tonalRamp": ["#200000", "#411400", "#652e08", "#8b4a22", "#b26c44", "#d49370", "#f7bc9c", "#ffe2c5"] },
+      "brick": { "role": "secondary", "displayName": "Sale Brick", "canonical": "oklch(49.8% 0.153 29.1)", "tonalRamp": ["#280000", "#4d0000", "#751811", "#9e342a", "#c8584b", "#ea8375", "#ffaea0", "#ffd6c9"] },
+      "forest": { "role": "secondary", "displayName": "Shelf Forest", "canonical": "oklch(49.5% 0.066 138.3)", "tonalRamp": ["#030f01", "#182a12", "#31472a", "#4c6644", "#6e8a65", "#94ad8c", "#bbd3b4", "#e1f6db"] },
+      "ink": { "role": "neutral", "displayName": "Print Ink", "canonical": "oklch(18.1% 0.009 59.0)", "tonalRamp": ["#0d0b09", "#272321", "#433f3c", "#615d59", "#847f7b", "#a8a3a0", "#cec9c6", "#f1eeeb"] },
+      "ink-soft": { "role": "neutral", "displayName": "Worn Ink", "canonical": "oklch(25.6% 0.018 55.5)", "tonalRamp": ["#0f0a07", "#29221e", "#463e38", "#655b55", "#897e77", "#aca29c", "#d2c8c3", "#f5ede7"] },
+      "tissue": { "role": "neutral", "displayName": "Tissue", "canonical": "oklch(96.8% 0.007 80.7)", "tonalRamp": ["#0c0b09", "#252421", "#413f3c", "#605d59", "#82807c", "#a7a4a0", "#cccac7", "#f0eeeb"] },
+      "tissue-lit": { "role": "neutral", "displayName": "Lit Tissue", "canonical": "oklch(100% 0 0)", "tonalRamp": ["#0b0b0b", "#242424", "#404040", "#5d5d5d", "#808080", "#a4a4a4", "#cacaca", "#eeeeee"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Home hero slogan only, uppercase Oswald, two lines." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles (3rem to 3.75rem) and page titles (3.75rem to 4.5rem), uppercase." },
+      "title": { "displayName": "Title", "purpose": "Product names on box labels, cart lines, legends, drawer headings; uppercase." },
+      "body": { "displayName": "Body", "purpose": "Descriptions, reviews, steps; 36 to 65ch; tabular figures on." },
+      "body-sm": { "displayName": "Body Small", "purpose": "Field text, chips, delivery notes, footer links." },
+      "label": { "displayName": "Label", "purpose": "Buttons, header navigation, footer headings, see-all links; uppercase, 0.06 to 0.08em tracking." },
+      "mono": { "displayName": "Mono", "purpose": "Colourway codes, size runs, dates, counts, breadcrumbs, stamps." },
+      "price": { "displayName": "Price", "purpose": "Every rouble figure, 1.125rem on cards up to 2.25rem on the product panel." }
+    },
+    "shadows": [],
+    "depth": [
+      { "name": "box-side-rest", "value": "board-deep slab, 1.5px ink border, offset translate(8px, 8px) behind the face", "purpose": "Standalone open boxes: product panel, checkout and order sheets. 20px on the hero's pulled box." },
+      { "name": "box-pull", "value": "face translate(-4px, -4px) to translate(-6px, -6px) over a coincident slab", "purpose": "Hover and focus-within on box labels in the wall and grids." }
+    ],
+    "borders": [
+      { "name": "rule", "value": "1.5px solid #15110e", "purpose": "Every edge, every cell, every section divider." },
+      { "name": "rule-inner", "value": "1px solid rgba(21, 17, 14, 0.3)", "purpose": "Row dividers inside a sheet, spec lists, size table rows." },
+      { "name": "focus", "value": "outline: 2px solid #15110e; outline-offset: 2px", "purpose": "Global :focus-visible ring." },
+      { "name": "error", "value": "outline: 2px solid #a8352a", "purpose": "Invalid field (offset 0) or missing size selection (offset 4px)." }
+    ],
+    "motion": [
+      { "name": "pull", "value": "180ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Box pull on hover and focus, colour transitions, drawer close, size-number slide." },
+      { "name": "lid", "value": "320ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Product route reveal via clip-path inset(0 0 100% 0) to inset(0), drawer open, image scale 1.03, category photo colour restore." },
+      { "name": "leave", "value": "100ms linear", "purpose": "Route and gallery fade-out." },
+      { "name": "reduced-motion", "value": "all transition and animation durations 1ms", "purpose": "prefers-reduced-motion: reduce; motion becomes an instant swap." }
+    ],
+    "breakpoints": [
+      { "name": "xs-grid", "value": "480px" },
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "container", "value": "1440px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Solid Button",
+      "kind": "button",
+      "refersTo": "button-solid",
+      "description": "The primary action on every screen: open catalogue, add to cart, checkout, apply.",
+      "html": "<button class=\"ds-btn-solid\">В корзину <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"square\" stroke-linejoin=\"miter\" width=\"20\" height=\"20\" aria-hidden=\"true\"><path d=\"M4 12h15\"/><path d=\"m13 6 6 6-6 6\"/></svg></button>",
+      "css": ".ds-btn-solid { display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 20px; border: 1.5px solid #15110e; border-radius: 0; background: #15110e; color: #f7f4ef; font-family: Oswald, 'Arial Narrow', sans-serif; font-weight: 500; font-size: 0.875rem; line-height: 1.25rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: background-color 180ms, color 180ms; } .ds-btn-solid:hover { background: #2a211b; } .ds-btn-solid:focus-visible { outline: 2px solid #15110e; outline-offset: 2px; } .ds-btn-solid:disabled { opacity: 0.5; cursor: not-allowed; }"
+    },
+    {
+      "name": "Line Button",
+      "kind": "button",
+      "refersTo": "button-line",
+      "description": "Secondary action printed on the board; inverts to ink on hover.",
+      "html": "<div style=\"background:#d87a3a;padding:16px\"><button class=\"ds-btn-line\">Новинки</button></div>",
+      "css": ".ds-btn-line { display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 20px; border: 1.5px solid #15110e; border-radius: 0; background: transparent; color: #15110e; font-family: Oswald, 'Arial Narrow', sans-serif; font-weight: 500; font-size: 0.875rem; line-height: 1.25rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: background-color 180ms, color 180ms; } .ds-btn-line:hover { background: #15110e; color: #f7f4ef; } .ds-btn-line:focus-visible { outline: 2px solid #15110e; outline-offset: 2px; }"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Tissue field with ink rule; lifts to white on hover and focus.",
+      "html": "<div style=\"background:#d87a3a;padding:16px\"><label class=\"ds-field-wrap\"><svg class=\"ds-field-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"square\" width=\"20\" height=\"20\" aria-hidden=\"true\"><path d=\"M10.5 17a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z\"/><path d=\"m20 20-4.8-4.8\"/></svg><input class=\"ds-field\" type=\"search\" placeholder=\"Модель, бренд или цвет\"></label></div>",
+      "css": ".ds-field-wrap { position: relative; display: block; max-width: 360px; } .ds-field-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #15110e; pointer-events: none; } .ds-field { width: 100%; padding: 12px 16px 12px 44px; border: 1.5px solid #15110e; border-radius: 0; background: #f7f4ef; color: #15110e; font-family: 'Golos Text', system-ui, sans-serif; font-size: 0.875rem; line-height: 1.25rem; transition: background-color 180ms; } .ds-field::placeholder { color: rgba(21, 17, 14, 0.7); } .ds-field:hover, .ds-field:focus { background: #ffffff; } .ds-field:focus-visible { outline: 2px solid #15110e; outline-offset: 2px; }"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Toggle chips in the filter panel; selected inverts to ink.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip\" aria-pressed=\"true\">Лайфстайл</button><button class=\"ds-chip\" aria-pressed=\"false\">Бег</button><button class=\"ds-chip\" aria-pressed=\"false\">Скейт</button></div>",
+      "css": ".ds-chips { display: flex; flex-wrap: wrap; gap: 8px; background: #d87a3a; padding: 16px; } .ds-chip { padding: 8px 12px; border: 1.5px solid #15110e; border-radius: 0; background: #f7f4ef; color: #15110e; font-family: 'Golos Text', system-ui, sans-serif; font-size: 0.875rem; cursor: pointer; transition: background-color 180ms, color 180ms; } .ds-chip:hover { background: #ffffff; } .ds-chip[aria-pressed=\"true\"] { background: #15110e; color: #f7f4ef; } .ds-chip:focus-visible { outline: 2px solid #15110e; outline-offset: 2px; }"
+    },
+    {
+      "name": "Box Label Card",
+      "kind": "card",
+      "refersTo": "box-label",
+      "description": "The product card: board face over a board-deep side slab, tissue photo well, notch, colourway strip; pulls out on hover and focus.",
+      "html": "<div style=\"background:#d87a3a;padding:24px\"><article class=\"ds-box\"><div class=\"ds-box-side\"></div><a class=\"ds-box-face\" href=\"#\"><div class=\"ds-box-well\"><div class=\"ds-box-photo\"></div><span class=\"ds-stamp ds-stamp-sale\">−25%</span><span class=\"ds-box-fav\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"square\" width=\"20\" height=\"20\"><path d=\"M12 20 4.6 12.7a4.6 4.6 0 0 1 6.5-6.5l.9.9.9-.9a4.6 4.6 0 0 1 6.5 6.5L12 20Z\"/></svg></span></div><div class=\"ds-box-label\"><span class=\"ds-notch\"></span><div class=\"ds-box-text\"><h3 class=\"ds-box-name\">Asics Gel-Saga</h3><p class=\"ds-box-code\">Белый / голубой / розовый</p><p class=\"ds-box-price\"><b>8 999 ₽</b> <s>11 990 ₽</s></p></div><div class=\"ds-strip\"><span style=\"background:#f7f4ef\"></span><span style=\"background:#7cc7d6\"></span><span style=\"background:#e889b5\"></span></div></div></a></article></div>",
+      "css": ".ds-box { position: relative; width: 280px; } .ds-box-side { position: absolute; inset: 0; border: 1.5px solid #15110e; background: #8a4518; } .ds-box-face { position: relative; display: flex; flex-direction: column; border: 1.5px solid #15110e; background: #d87a3a; color: #15110e; text-decoration: none; transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-box:hover .ds-box-face, .ds-box-face:focus-visible { transform: translate(-6px, -6px); } .ds-box-face:focus-visible { outline: 2px solid #15110e; outline-offset: 2px; } .ds-box-well { position: relative; padding: 10px; background: #f7f4ef; border-bottom: 1.5px solid #15110e; } .ds-box-photo { aspect-ratio: 5 / 4; border: 1.5px solid #15110e; background: #ffffff; } .ds-box-fav { position: absolute; top: 0; right: 0; display: grid; place-items: center; width: 40px; height: 40px; background: #f7f4ef; border-left: 1.5px solid #15110e; border-bottom: 1.5px solid #15110e; } .ds-stamp { position: absolute; top: 0; left: 0; padding: 4px 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.75rem; font-weight: 700; color: #f7f4ef; border-right: 1.5px solid #15110e; border-bottom: 1.5px solid #15110e; } .ds-stamp-sale { background: #a8352a; } .ds-box-label { position: relative; display: flex; } .ds-notch { position: absolute; left: 50%; top: 0; width: 40px; height: 12px; transform: translateX(-50%); border: 1.5px solid #15110e; border-top: 0; border-radius: 0 0 9999px 9999px; background: #d87a3a; } .ds-box-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; padding: 20px 16px 16px; } .ds-box-name { margin: 0; font-family: Oswald, 'Arial Narrow', sans-serif; font-weight: 500; font-size: 1.5rem; line-height: 0.95; letter-spacing: 0.01em; text-transform: uppercase; } .ds-box-code { margin: 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.75rem; text-transform: uppercase; } .ds-box-price { margin: 0; padding-top: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; } .ds-box-price b { font-size: 1.125rem; } .ds-box-price s { font-size: 0.875rem; margin-left: 12px; } .ds-strip { display: flex; flex-direction: column; width: 14px; flex-shrink: 0; border-left: 1.5px solid #15110e; } .ds-strip span { flex: 1; } .ds-strip span:not(:last-child) { border-bottom: 1px solid #15110e; }"
+    },
+    {
+      "name": "Size Picker",
+      "kind": "custom",
+      "refersTo": "size-cell",
+      "description": "Ruled grid of mono size cells; selected inverts, sold-out is struck on box side, a brick dot marks the last pairs.",
+      "html": "<div style=\"background:#d87a3a;padding:16px\"><div class=\"ds-sizes\" role=\"radiogroup\" aria-label=\"Размер\"><button class=\"ds-size\" role=\"radio\" aria-checked=\"false\">36</button><button class=\"ds-size ds-size-out\" role=\"radio\" aria-checked=\"false\" disabled>36,5</button><button class=\"ds-size\" role=\"radio\" aria-checked=\"true\">37,5</button><button class=\"ds-size\" role=\"radio\" aria-checked=\"false\">38<span class=\"ds-size-low\"></span></button><button class=\"ds-size\" role=\"radio\" aria-checked=\"false\">38,5</button><button class=\"ds-size\" role=\"radio\" aria-checked=\"false\">39</button></div></div>",
+      "css": ".ds-sizes { display: grid; grid-template-columns: repeat(6, 1fr); max-width: 420px; border-left: 1.5px solid #15110e; border-top: 1.5px solid #15110e; } .ds-size { position: relative; height: 56px; border: 0; border-right: 1.5px solid #15110e; border-bottom: 1.5px solid #15110e; border-radius: 0; background: #f7f4ef; color: #15110e; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 1rem; cursor: pointer; transition: background-color 180ms; } .ds-size:hover { background: #ffffff; } .ds-size[aria-checked=\"true\"] { background: #15110e; color: #f7f4ef; font-weight: 700; } .ds-size-out, .ds-size-out:hover { background: rgba(184, 98, 42, 0.4); text-decoration: line-through; text-decoration-thickness: 1px; cursor: not-allowed; } .ds-size-low { position: absolute; top: 4px; right: 4px; width: 6px; height: 6px; background: #a8352a; } .ds-size:focus-visible { outline: 2px solid #15110e; outline-offset: -4px; }"
+    },
+    {
+      "name": "Stamps",
+      "kind": "chip",
+      "refersTo": "stamp-sale",
+      "description": "Mono stamps for sale and new; bordered, butted into corners, never enlarged.",
+      "html": "<div class=\"ds-stamps\"><span class=\"ds-stamp2 ds-stamp2-sale\">−25%</span><span class=\"ds-stamp2 ds-stamp2-new\">Новинка</span></div>",
+      "css": ".ds-stamps { display: flex; gap: 8px; background: #d87a3a; padding: 16px; } .ds-stamp2 { padding: 4px 8px; border: 1.5px solid #15110e; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #f7f4ef; } .ds-stamp2-sale { background: #a8352a; } .ds-stamp2-new { background: #4f6b46; }"
+    },
+    {
+      "name": "Header",
+      "kind": "nav",
+      "refersTo": "header",
+      "description": "Sticky board header: Oswald wordmark, caps links with underline for current page, solid cart button with mono count.",
+      "html": "<header class=\"ds-header\"><a class=\"ds-wordmark\" href=\"#\">Пара</a><nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">Каталог</a><a href=\"#\">Новинки</a><a href=\"#\">Скидки</a><a href=\"#\">Заказы</a></nav><button class=\"ds-cart\" aria-label=\"Корзина: 2 шт.\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"square\" width=\"20\" height=\"20\" aria-hidden=\"true\"><path d=\"M5 8h14l-1 12H6L5 8Z\"/><path d=\"M9 8V6.5a3 3 0 0 1 6 0V8\"/></svg><span>2</span></button></header>",
+      "css": ".ds-header { display: flex; align-items: center; gap: 24px; height: 72px; padding: 0 40px; background: #d87a3a; color: #15110e; border-bottom: 1.5px solid #15110e; } .ds-wordmark { font-family: Oswald, 'Arial Narrow', sans-serif; font-weight: 700; font-size: 1.875rem; line-height: 1; text-transform: uppercase; letter-spacing: -0.025em; color: inherit; text-decoration: none; } .ds-nav { display: flex; gap: 24px; } .ds-nav a { font-family: Oswald, 'Arial Narrow', sans-serif; font-weight: 500; font-size: 0.875rem; letter-spacing: 0.08em; text-transform: uppercase; color: inherit; text-decoration: none; text-underline-offset: 6px; text-decoration-thickness: 1.5px; } .ds-nav a:hover, .ds-nav a[aria-current=\"page\"] { text-decoration-line: underline; } .ds-nav a:focus-visible { outline: 2px solid #15110e; outline-offset: 2px; } .ds-cart { margin-left: auto; display: inline-flex; align-items: center; gap: 12px; padding: 10px 16px; border: 1.5px solid #15110e; border-radius: 0; background: #15110e; color: #f7f4ef; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; font-size: 0.875rem; cursor: pointer; transition: background-color 180ms; } .ds-cart:hover { background: #2a211b; } .ds-cart:focus-visible { outline: 2px solid #15110e; outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Stockroom Wall",
+    "overview": "Every pair is a shoe box on a stockroom shelf, and the printed end label of that box is the product card. The page itself is kraft box-board: a warm orange ground that runs edge to edge on every route, with ink-black print on top. Names and headings are set like a stencilled box label in condensed caps. Anything countable (prices, sizes, stock, order numbers, colourway codes) is set in a monospaced face, the way a warehouse label prints its data. Tissue paper appears when a box is opened: photo wells, the cart drawer, forms, order sheets.\n\nThe system is flat and ruled. Every edge is a 1.5px ink line, every corner is square, and there are no gradients or blurred shadows. Depth is physical: a box label sits on a darker box-side slab, and on hover or focus the label slides up and left off it, as if pulled from the shelf. Colour beyond board, ink and tissue is limited to two stamps: brick for sales and scarcity, forest for new arrivals. Real colour comes from the product photos and from each label's vertical colourway strip.\n\nDensity is medium to high. The home hero packs a wall of box ends three across, catalogue grids run three or four up, and data is dense mono text. It still reads calm, because the palette is so narrow and the grid is ruled rather than floated.",
+    "keyCharacteristics": [
+      "Kraft orange ground on every page; ink print; tissue only inside opened boxes and on paper controls.",
+      "1.5px ink rules on every edge, zero radius, no shadows, no gradients.",
+      "Condensed caps for names, mono for every number, a plain grotesque for sentences.",
+      "Box labels carry a finger notch on the top edge and a colourway strip on the right edge.",
+      "Hover and focus pull a box out of the wall (180ms); opening a product lifts the lid (320ms clip reveal)."
+    ],
+    "rules": [
+      { "name": "The Kraft Ground Rule", "body": "Board is the ground of every page. White or tissue never becomes the page background; tissue is what you find inside a box.", "section": "colors" },
+      { "name": "The Two Stamps Rule", "body": "Brick and forest are stamps: small, bordered, mono-set. They never fill a panel, a button or a section.", "section": "colors" },
+      { "name": "The Ink Inversion Rule", "body": "Interactive state is an inversion: hover, pressed and selected turn a control ink with tissue text. There is no accent colour for state.", "section": "colors" },
+      { "name": "The Stencil and Ledger Rule", "body": "Names and headings are Oswald caps; every number is JetBrains Mono. Golos never sets a price, a size or a count.", "section": "typography" },
+      { "name": "The Caps Only Rule", "body": "Oswald is always uppercase. There is no sentence-case display type.", "section": "typography" },
+      { "name": "The Ruled Grid Rule", "body": "Tables of equal cells (size pickers, size filters, brand wall) share their borders: the container draws the top and left rule, each cell draws its bottom and right rule. Cells never float with gaps.", "section": "layout" },
+      { "name": "The Box Side Rule", "body": "Depth is a solid, ink-ruled board-deep slab behind a box, never a shadow. The slab only appears behind things that are boxes: labels, sheets, panels.", "section": "elevation" },
+      { "name": "The Pull Rule", "body": "Lift is movement, not shadow. Hover and keyboard focus move the box out by 4–6px over 180ms on the pull curve; image scale inside the well is at most 1.03.", "section": "elevation" },
+      { "name": "The Square Corner Rule", "body": "Radius is 0 everywhere. The notch is the one rounded form, and it only appears on box labels and sheets.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do keep board (#d87a3a) as the page ground on every route, including error and empty states.",
+      "Do draw every edge with a 1.5px ink rule and keep every corner at 0px.",
+      "Do give every product-bearing box a board-deep side slab, a top-edge finger notch and a right-edge colourway strip.",
+      "Do set every price, size, count, date and code in JetBrains Mono, and every product name and heading in uppercase Oswald.",
+      "Do show state by ink inversion: ink fill, tissue text.",
+      "Do pull boxes 4–6px up and left on hover and on keyboard focus (180ms, cubic-bezier(0.16, 1, 0.3, 1)); open product routes with the 320ms lid reveal.",
+      "Do build equal-cell tables as ruled grids with shared borders.",
+      "Do keep small text on board or tissue; box side is only for large mono figures."
+    ],
+    "donts": [
+      "Don't use box-shadow, blur, glow or gradients anywhere; depth is the Box Side slab.",
+      "Don't round a corner. The finger notch is the only curve.",
+      "Don't use brick or forest for anything larger than a stamp, a dot, a heart or an error outline.",
+      "Don't make tissue or white the page ground, and don't put a white card grid of floating packshots on the board.",
+      "Don't set prices or sizes in Golos Text or in Oswald.",
+      "Don't set Oswald in lowercase or sentence case.",
+      "Don't add a UI accent colour for links, focus or selection; ink does all of it."
+    ]
+  }
+}
