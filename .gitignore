@@ -35,3 +35,8 @@ dist/
 
 # Optional project configuration files
 vue.config.js
+
+# Impeccable review screenshots and local agent state
+.impeccable/review/
+.impeccable/hook.cache.json
+.claude/settings.local.json
