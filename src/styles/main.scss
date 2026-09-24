@@ -5,19 +5,75 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scrollbar-color: theme('colors.ink.DEFAULT') theme('colors.board.side');
   }
 
   body {
-    @apply bg-zinc-100 text-ink antialiased;
+    @apply bg-board-shelf font-sans text-ink antialiased;
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    @apply bg-ink text-tissue;
   }
 
   :focus-visible {
-    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-zinc-100;
+    @apply outline outline-2 outline-offset-2 outline-ink;
+  }
+
+  input,
+  textarea {
+    caret-color: theme('colors.ink.DEFAULT');
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      transition-duration: 1ms !important;
+      animation-duration: 1ms !important;
+    }
   }
 }
 
 @layer components {
   .container-page {
     @apply mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-10;
+  }
+
+  .label-caps {
+    @apply font-display uppercase leading-[0.95] tracking-[0.01em];
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-3 border-rule border-ink px-5 py-3 font-display text-sm uppercase tracking-[0.06em] transition-colors duration-pull disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-solid {
+    @apply btn bg-ink text-tissue hover:bg-ink-soft;
+  }
+
+  .btn-line {
+    @apply btn bg-transparent text-ink hover:bg-ink hover:text-tissue;
+  }
+
+  .btn-line-tissue {
+    @apply btn bg-tissue text-ink hover:bg-ink hover:text-tissue;
+  }
+
+  .field {
+    @apply w-full border-rule border-ink bg-tissue px-4 py-3 text-sm text-ink transition-colors placeholder:text-ink/70 hover:bg-white focus:bg-white;
+  }
+
+  .notch {
+    @apply pointer-events-none absolute left-1/2 top-0 h-3 w-10 -translate-x-1/2 rounded-b-full border-x-rule border-b-rule border-ink bg-board-shelf;
   }
 }
