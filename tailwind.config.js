@@ -4,25 +4,34 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: {
-          DEFAULT: '#0b0b0c',
-          soft: '#151518',
-          line: '#2a2a2f',
-          muted: '#8b8b93'
+        board: {
+          DEFAULT: '#d6bc96',
+          side: '#ad8b61',
+          deep: '#6f5236',
+          shelf: '#c3a47b'
         },
-        accent: {
-          DEFAULT: '#d6ff3e',
-          dark: '#bce620'
-        }
+        ink: {
+          DEFAULT: '#15110e',
+          soft: '#2a211b'
+        },
+        tissue: '#f5f2ec',
+        forest: '#4f6b46',
+        brick: '#a8352a'
       },
       fontFamily: {
-        sans: ['"Inter"', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif']
+        display: ['Oswald', '"Arial Narrow"', 'sans-serif'],
+        sans: ['"Golos Text"', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'Menlo', 'monospace']
       },
-      borderRadius: {
-        '4xl': '1.75rem'
+      borderWidth: {
+        rule: '1.5px'
       },
       transitionTimingFunction: {
-        smooth: 'cubic-bezier(0.22, 1, 0.36, 1)'
+        pull: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      },
+      transitionDuration: {
+        pull: '180ms',
+        lid: '320ms'
       }
     }
   },
