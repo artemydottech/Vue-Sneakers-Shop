@@ -1,10 +1,10 @@
 <template>
-  <div class="overflow-hidden rounded-4xl border border-zinc-200 bg-white">
-    <div class="aspect-[4/3] animate-pulse bg-zinc-100" />
-    <div class="space-y-3 bg-ink p-5">
-      <div class="h-2.5 w-16 animate-pulse rounded-full bg-ink-line" />
-      <div class="h-3 w-32 animate-pulse rounded-full bg-ink-line" />
-      <div class="h-5 w-24 animate-pulse rounded-full bg-ink-line" />
+  <div class="flex flex-col border-rule border-ink/40 bg-board" aria-hidden="true">
+    <div class="aspect-[5/4] animate-pulse border-b-rule border-ink/40 bg-tissue/40" />
+    <div class="space-y-3 p-4">
+      <div class="h-6 w-3/4 animate-pulse bg-board-side" />
+      <div class="h-3 w-1/2 animate-pulse bg-board-side" />
+      <div class="h-5 w-24 animate-pulse bg-board-side" />
     </div>
   </div>
 </template>
