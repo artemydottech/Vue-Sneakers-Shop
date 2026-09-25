@@ -4,25 +4,25 @@ import type { CartLine, Sneaker } from '@/types'
 import { isCartLines } from '@/utils/storage-guards'
 import { readJson, writeJson } from '@/utils/storage'
 
-const STORAGE_KEY = 'sneakers:cart'
-const VAT_RATE = 0.05
+const STORAGE_KEY = 'para:cart'
+
+export const lineKey = (sneakerId: number, size: number) => `${sneakerId}:${size}`
 
 export const useCartStore = defineStore('cart', () => {
   const lines = ref<CartLine[]>(readJson<CartLine[]>(STORAGE_KEY, [], isCartLines))
 
-  const ids = computed(() => new Set(lines.value.map((line) => line.id)))
   const count = computed(() => lines.value.reduce((sum, line) => sum + line.quantity, 0))
   const subtotal = computed(() =>
     lines.value.reduce((sum, line) => sum + line.price * line.quantity, 0)
   )
-  const vat = computed(() => Math.round(subtotal.value * VAT_RATE))
-  const total = computed(() => subtotal.value + vat.value)
   const isEmpty = computed(() => lines.value.length === 0)
 
-  const has = (id: number) => ids.value.has(id)
+  const has = (sneakerId: number, size?: number) =>
+    lines.value.some((line) => line.id === sneakerId && (size === undefined || line.size === size))
 
-  const add = (sneaker: Sneaker) => {
-    const line = lines.value.find((item) => item.id === sneaker.id)
+  const add = (sneaker: Sneaker, size: number) => {
+    const key = lineKey(sneaker.id, size)
+    const line = lines.value.find((item) => item.key === key)
 
     if (line) {
       line.quantity += 1
@@ -30,35 +30,29 @@ export const useCartStore = defineStore('cart', () => {
     }
 
     lines.value.push({
+      key,
       id: sneaker.id,
       title: sneaker.title,
+      brand: sneaker.brand,
       price: sneaker.price,
       imageUrl: sneaker.imageUrl,
+      size,
       quantity: 1
     })
   }
 
-  const remove = (id: number) => {
-    lines.value = lines.value.filter((line) => line.id !== id)
+  const remove = (key: string) => {
+    lines.value = lines.value.filter((line) => line.key !== key)
   }
 
-  const setQuantity = (id: number, quantity: number) => {
+  const setQuantity = (key: string, quantity: number) => {
     if (quantity < 1) {
-      remove(id)
+      remove(key)
       return
     }
 
-    const line = lines.value.find((item) => item.id === id)
+    const line = lines.value.find((item) => item.key === key)
     if (line) line.quantity = quantity
-  }
-
-  const toggle = (sneaker: Sneaker) => {
-    if (has(sneaker.id)) {
-      remove(sneaker.id)
-      return
-    }
-
-    add(sneaker)
   }
 
   const clear = () => {
@@ -67,18 +61,5 @@ export const useCartStore = defineStore('cart', () => {
 
   watch(lines, (value) => writeJson(STORAGE_KEY, value), { deep: true })
 
-  return {
-    lines,
-    count,
-    subtotal,
-    vat,
-    total,
-    isEmpty,
-    has,
-    add,
-    remove,
-    setQuantity,
-    toggle,
-    clear
-  }
+  return { lines, count, subtotal, isEmpty, has, add, remove, setQuantity, clear }
 })
