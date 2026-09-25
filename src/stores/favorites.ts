@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { isIdList } from '@/utils/storage-guards'
 import { readJson, writeJson } from '@/utils/storage'
 
-const STORAGE_KEY = 'sneakers:favorites'
+const STORAGE_KEY = 'para:favorites'
 
 export const useFavoritesStore = defineStore('favorites', () => {
   const ids = ref<number[]>(readJson<number[]>(STORAGE_KEY, [], isIdList))
