@@ -1,44 +1,55 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { LoadStatus, Sneaker, SortKey } from '@/types'
+import type { LoadStatus, Sneaker } from '@/types'
 import { getSneakers } from '@/services/api/sneakers'
 import { errorMessage } from '@/utils/error'
-
-const comparators: Record<SortKey, (a: Sneaker, b: Sneaker) => number> = {
-  popular: (a, b) => a.id - b.id,
-  priceAsc: (a, b) => a.price - b.price,
-  priceDesc: (a, b) => b.price - a.price,
-  title: (a, b) => a.title.localeCompare(b.title, 'ru')
-}
+import { isOnSale } from '@/utils/catalogue-filters'
 
 export const useCatalogueStore = defineStore('catalogue', () => {
   const items = ref<Sneaker[]>([])
   const status = ref<LoadStatus>('idle')
   const error = ref<Nullable<string>>(null)
-  const search = ref('')
-  const sortBy = ref<SortKey>('popular')
 
-  const isLoading = computed(() => status.value === 'loading')
+  const isLoading = computed(() => status.value === 'idle' || status.value === 'loading')
 
-  const visibleItems = computed(() => {
-    const query = search.value.trim().toLowerCase()
+  const brands = computed(() =>
+    [...new Set(items.value.map((item) => item.brand))].sort((a, b) =>
+      a.localeCompare(b, 'en', { sensitivity: 'base' })
+    )
+  )
 
-    const filtered = query
-      ? items.value.filter(
-          (item) =>
-            item.title.toLowerCase().includes(query) || item.brand.toLowerCase().includes(query)
-        )
-      : items.value
-
-    return [...filtered].sort(comparators[sortBy.value])
+  const priceRange = computed(() => {
+    const prices = items.value.map((item) => item.price)
+    return prices.length ? { min: Math.min(...prices), max: Math.max(...prices) } : null
   })
+
+  const newArrivals = computed(() =>
+    items.value.filter((item) => item.isNew).sort((a, b) => b.popularity - a.popularity)
+  )
+
+  const bestsellers = computed(() =>
+    [...items.value].sort((a, b) => b.popularity - a.popularity).slice(0, 8)
+  )
+
+  const onSale = computed(() => items.value.filter(isOnSale))
 
   const byId = (id: number) => items.value.find((item) => item.id === id) ?? null
 
+  const byIds = (ids: number[]) => ids.map(byId).filter((item): item is Sneaker => item !== null)
+
   const relatedTo = (sneaker: Sneaker, limit = 4) =>
     items.value
-      .filter((item) => item.id !== sneaker.id && item.brand === sneaker.brand)
+      .filter((item) => item.id !== sneaker.id)
+      .map((item) => ({
+        item,
+        score:
+          Number(item.category === sneaker.category) * 2 +
+          Number(item.brand === sneaker.brand) +
+          Number(Math.abs(item.price - sneaker.price) < 4000)
+      }))
+      .sort((a, b) => b.score - a.score || b.item.popularity - a.item.popularity)
       .slice(0, limit)
+      .map(({ item }) => item)
 
   const load = async () => {
     if (status.value === 'loading') return
@@ -55,5 +66,19 @@ export const useCatalogueStore = defineStore('catalogue', () => {
     }
   }
 
-  return { items, status, error, search, sortBy, isLoading, visibleItems, byId, relatedTo, load }
+  return {
+    items,
+    status,
+    error,
+    isLoading,
+    brands,
+    priceRange,
+    newArrivals,
+    bestsellers,
+    onSale,
+    byId,
+    byIds,
+    relatedTo,
+    load
+  }
 })
