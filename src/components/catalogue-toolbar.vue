@@ -1,54 +1,81 @@
 <script setup lang="ts">
+import { onBeforeUnmount, ref, watch } from 'vue'
 import { SORT_OPTIONS, type SortKey } from '@/types'
-import { useCatalogueStore } from '@/stores/catalogue'
+import UiIcon from './ui-icon.vue'
 
-const catalogue = useCatalogueStore()
+const props = defineProps<{
+  search: string
+  sortBy: SortKey
+  activeFilterCount: number
+}>()
+
+const emit = defineEmits<{
+  search: [value: string]
+  sort: [value: SortKey]
+  openFilters: []
+}>()
+
+const SEARCH_DEBOUNCE_MS = 350
+
+const query = ref(props.search)
+let timer: ReturnType<typeof setTimeout> | undefined
+
+watch(
+  () => props.search,
+  (value) => {
+    if (value !== query.value.trim()) query.value = value
+  }
+)
+
+watch(query, (value) => {
+  clearTimeout(timer)
+  timer = setTimeout(() => emit('search', value.trim()), SEARCH_DEBOUNCE_MS)
+})
+
+onBeforeUnmount(() => clearTimeout(timer))
 
 const onSortChange = (event: Event) => {
-  catalogue.sortBy = (event.target as HTMLSelectElement).value as SortKey
+  emit('sort', (event.target as HTMLSelectElement).value as SortKey)
 }
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-    <div>
-      <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">Каталог</h1>
-      <p class="mt-1 text-sm text-zinc-500">
-        {{ catalogue.visibleItems.length }} из {{ catalogue.items.length }} моделей
-      </p>
-    </div>
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+    <label class="relative block flex-1">
+      <span class="sr-only">Поиск по каталогу</span>
+      <UiIcon
+        name="search"
+        class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2"
+      />
+      <input
+        v-model="query"
+        type="search"
+        placeholder="Модель, бренд или цвет"
+        class="field pl-11"
+      />
+    </label>
 
-    <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-      <label class="relative block">
-        <span class="sr-only">Поиск по каталогу</span>
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.8"
-          class="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-zinc-400"
-        >
-          <circle cx="11" cy="11" r="7" />
-          <path d="m20 20-3.5-3.5" stroke-linecap="round" />
-        </svg>
-        <input
-          v-model="catalogue.search"
-          type="search"
-          placeholder="Найти кроссовки"
-          class="w-full rounded-2xl border border-zinc-200 bg-white py-3 pl-11 pr-4 text-sm transition placeholder:text-zinc-400 hover:border-zinc-300 sm:w-64"
-        />
-      </label>
-
-      <label class="block">
+    <div class="flex gap-3">
+      <label class="relative block flex-1 sm:w-60 sm:flex-none">
         <span class="sr-only">Сортировка</span>
         <select
-          :value="catalogue.sortBy"
-          class="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-sm transition hover:border-zinc-300 sm:w-56"
+          :value="sortBy"
+          class="field cursor-pointer appearance-none pr-10"
           @change="onSortChange"
         >
           <option v-for="(label, key) in SORT_OPTIONS" :key="key" :value="key">{{ label }}</option>
         </select>
+        <UiIcon
+          name="chevronDown"
+          class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2"
+        />
       </label>
+
+      <button type="button" class="btn-line-tissue lg:hidden" @click="emit('openFilters')">
+        <UiIcon name="filter" />
+        Фильтры
+        <span v-if="activeFilterCount" class="font-mono">{{ activeFilterCount }}</span>
+      </button>
     </div>
   </div>
 </template>
