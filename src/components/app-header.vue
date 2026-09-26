@@ -1,84 +1,152 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { computed, ref, watch } from 'vue'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
+import UiIcon from './ui-icon.vue'
 import { useCartStore } from '@/stores/cart'
 import { useFavoritesStore } from '@/stores/favorites'
 import { useOrdersStore } from '@/stores/orders'
-import { formatPrice } from '@/utils/format'
 
 const emit = defineEmits<{
   openCart: []
 }>()
 
+const route = useRoute()
+const router = useRouter()
 const cart = useCartStore()
 const favorites = useFavoritesStore()
 const orders = useOrdersStore()
 
+const searchQuery = ref('')
+
+watch(
+  () => route.query.q,
+  (value) => {
+    searchQuery.value = typeof value === 'string' ? value : ''
+  },
+  { immediate: true }
+)
+
+const submitSearch = () => {
+  const q = searchQuery.value.trim()
+  router.push({ path: '/catalog', query: q ? { q } : {} })
+}
+
+const NAV_LINKS = [
+  { label: 'Каталог', to: { path: '/catalog' }, section: 'all' },
+  { label: 'Новинки', to: { path: '/catalog', query: { sort: 'new' } }, section: 'new' },
+  { label: 'Скидки', to: { path: '/catalog', query: { sale: '1' } }, section: 'sale' }
+] as const
+
+const catalogSection = computed(() => {
+  if (route.path !== '/catalog') return null
+  if (route.query.sale === '1') return 'sale'
+  if (route.query.sort === 'new') return 'new'
+  return 'all'
+})
+
 const linkClass =
-  'relative text-sm text-ink-muted transition hover:text-white aria-[current=page]:text-white'
+  'whitespace-nowrap font-display text-sm uppercase tracking-[0.08em] underline-offset-[6px] decoration-[1.5px] hover:underline aria-[current=page]:underline'
 </script>
 
 <template>
-  <header class="sticky top-0 z-30 border-b border-ink-line bg-ink/85 backdrop-blur-xl">
-    <div class="container-page flex h-[72px] items-center justify-between gap-6">
-      <RouterLink to="/" class="flex items-baseline gap-2 text-white">
-        <span class="text-lg font-semibold uppercase tracking-[0.2em]">Sneakers</span>
-        <span class="hidden text-[11px] uppercase tracking-[0.3em] text-accent sm:inline">2.0</span>
+  <header class="sticky top-0 z-30 border-b-rule border-ink bg-board">
+    <div class="container-page flex h-16 items-center gap-6 lg:h-[72px]">
+      <RouterLink
+        to="/"
+        class="font-display text-3xl font-bold uppercase leading-none tracking-tight"
+      >
+        Пара
       </RouterLink>
 
-      <nav class="flex items-center gap-6">
-        <RouterLink to="/" :class="linkClass">Каталог</RouterLink>
+      <nav aria-label="Разделы" class="hidden items-center gap-6 md:flex">
+        <RouterLink
+          v-for="link in NAV_LINKS"
+          :key="link.label"
+          :to="link.to"
+          :class="linkClass"
+          :aria-current="catalogSection === link.section ? 'page' : undefined"
+        >
+          {{ link.label }}
+        </RouterLink>
+        <RouterLink to="/orders" :class="linkClass">
+          Заказы<span v-if="orders.count" class="font-mono"> · {{ orders.count }}</span>
+        </RouterLink>
+      </nav>
 
-        <RouterLink to="/favorites" :class="linkClass">
-          Закладки
+      <form
+        role="search"
+        class="ml-auto hidden max-w-xs flex-1 lg:block"
+        @submit.prevent="submitSearch"
+      >
+        <label class="relative block">
+          <span class="sr-only">Поиск по каталогу</span>
+          <input
+            v-model="searchQuery"
+            type="search"
+            placeholder="Модель, бренд, цвет"
+            class="field py-2 pr-10"
+          />
+          <button
+            type="submit"
+            aria-label="Найти"
+            class="absolute inset-y-0 right-0 grid w-10 place-items-center"
+          >
+            <UiIcon name="search" />
+          </button>
+        </label>
+      </form>
+
+      <div class="ml-auto flex items-center lg:ml-0">
+        <RouterLink
+          to="/catalog"
+          aria-label="Поиск"
+          class="grid size-11 place-items-center lg:hidden"
+        >
+          <UiIcon name="search" />
+        </RouterLink>
+
+        <RouterLink
+          to="/favorites"
+          class="relative grid size-11 place-items-center"
+          :aria-label="`Закладки: ${favorites.count}`"
+        >
+          <UiIcon name="heart" />
           <span
             v-if="favorites.count"
-            class="ml-1 rounded-full bg-ink-line px-1.5 py-0.5 text-[10px] text-white"
+            class="absolute right-0.5 top-1 min-w-5 border-rule border-ink bg-tissue px-1 text-center font-mono text-[10px] font-bold leading-4"
           >
             {{ favorites.count }}
           </span>
         </RouterLink>
 
-        <RouterLink to="/orders" :class="linkClass">
-          Заказы
-          <span
-            v-if="orders.count"
-            class="ml-1 rounded-full bg-ink-line px-1.5 py-0.5 text-[10px] text-white"
-          >
-            {{ orders.count }}
-          </span>
-        </RouterLink>
-      </nav>
-
-      <button
-        type="button"
-        class="flex items-center gap-3 rounded-2xl bg-ink-soft px-4 py-2.5 text-white transition hover:bg-accent hover:text-ink"
-        @click="emit('openCart')"
-      >
-        <span class="relative grid place-items-center">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            class="size-5"
-          >
-            <path
-              d="M4 6h2l1.6 9.2a2 2 0 0 0 2 1.7h6.9a2 2 0 0 0 2-1.6L20 9H6.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <circle cx="10" cy="20" r="1.2" fill="currentColor" stroke="none" />
-            <circle cx="17" cy="20" r="1.2" fill="currentColor" stroke="none" />
-          </svg>
-          <span
-            v-if="cart.count"
-            class="absolute -right-2 -top-2 grid size-4 place-items-center rounded-full bg-accent text-[10px] font-bold text-ink"
-          >
-            {{ cart.count }}
-          </span>
-        </span>
-        <b class="hidden text-sm tabular-nums sm:inline">{{ formatPrice(cart.total) }}</b>
-      </button>
+        <button
+          type="button"
+          class="btn-solid ml-2 px-4 py-2.5"
+          :aria-label="`Корзина: ${cart.count} шт.`"
+          @click="emit('openCart')"
+        >
+          <UiIcon name="bag" />
+          <span class="font-mono text-sm font-bold">{{ cart.count }}</span>
+        </button>
+      </div>
     </div>
+
+    <nav
+      aria-label="Разделы"
+      class="container-page flex gap-6 overflow-x-auto border-t-rule border-ink py-2.5 md:hidden"
+    >
+      <RouterLink
+        v-for="link in NAV_LINKS"
+        :key="link.label"
+        :to="link.to"
+        :class="linkClass"
+        :aria-current="catalogSection === link.section ? 'page' : undefined"
+      >
+        {{ link.label }}
+      </RouterLink>
+      <RouterLink to="/orders" :class="linkClass">
+        Заказы<span v-if="orders.count" class="font-mono"> · {{ orders.count }}</span>
+      </RouterLink>
+    </nav>
   </header>
 </template>
