@@ -1,0 +1,1 @@
+import{a7 as n,m as o,a8 as c,n as i,a9 as l,aa as d}from"./index-BlBBX6EV.js";const s="para:recently-viewed",u=8,f=n("recently-viewed",()=>{const e=o(c(s,[],l)),t=a=>{e.value=[a,...e.value.filter(r=>r!==a)].slice(0,u)};return i(e,a=>d(s,a)),{ids:e,track:t}});export{f as u};
